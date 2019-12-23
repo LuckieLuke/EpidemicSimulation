@@ -23,9 +23,25 @@ public class Agent {
         return resistant;
     }
 
+    public void sicken() {
+        sick = true;
+    }
+
+    public void recover() {
+        sick = false;
+        resistant = true;
+    }
+
+    public boolean isSick() {
+        return sick;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(id).append(' ').append(type);
+        sb.append(id);
+        if(sick)
+            sb.append("*");
+        sb.append(" ").append(String.format("%s", type).toLowerCase()).append('\n');
         return sb.toString();
     }
 }

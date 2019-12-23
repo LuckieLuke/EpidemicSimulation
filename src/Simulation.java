@@ -5,23 +5,30 @@ import java.util.Properties;
 
 public class Simulation {
 
-    public static int numberOfAgents;
-    public static int friendsAvg;
-    public static double socialProbability;
-    public static double deathChance;
-    public static double recoverChance;
-    public static double meetingChance;
-    public static double diseaseChance;
+    private static int numberOfAgents;
+    private static int friendsAvg;
+    private static double socialProbability;
+    private static double deathChance;
+    private static double recoverChance;
+    private static double meetingChance;
+    private static double diseaseChance;
+    private static final int numOfDays = 5;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             getProps();
         } catch(IOException e) {
             System.out.println("We've got a problem with properties' file!");
         }
 
+
         FriendsGraph fg = new FriendsGraph(numberOfAgents, friendsAvg, socialProbability);
-        fg.printGraph();
+        FileManager fm = new FileManager();
+        fm.writeData(numberOfAgents, socialProbability, meetingChance, diseaseChance,
+                recoverChance, deathChance, numOfDays, friendsAvg, fg);
+
+        World world = new World(fg, deathChance, recoverChance, meetingChance, diseaseChance, numOfDays);
+
     }
 
     private static void getProps() throws IOException {

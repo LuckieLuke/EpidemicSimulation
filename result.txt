@@ -1,0 +1,15 @@
+number of agents=5
+social probability=0.1
+meeting probability=0.5
+disease probability=0.1
+recovery probability=0.05
+death probability=0.001
+number of days=5
+average friends=5
+
+# agents as: id type or id* type if sick
+1 reserved
+2 reserved
+3* reserved
+4 reserved
+5 reserved

@@ -19,6 +19,8 @@ public class FriendsGraph {
             double chance = rand.nextDouble();
             agents[i] = new Agent(i+1, chance < socialProbability ? AgentType.SOCIAL : AgentType.RESERVED);
         }
+        int sickNum = rand.nextInt(numOfAgents);
+        agents[sickNum].sicken();
 
         makeGraph();
     }
@@ -42,6 +44,10 @@ public class FriendsGraph {
             else
                 i--;
         }
+    }
+
+    public Agent[] getAgents() {
+        return agents;
     }
 
     public void printAgents() {
