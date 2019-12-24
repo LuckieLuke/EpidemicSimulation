@@ -1,15 +1,35 @@
-number of agents=5
-social probability=0.1
+number of agents=8
+social probability=0.3
 meeting probability=0.5
 disease probability=0.1
 recovery probability=0.05
 death probability=0.001
 number of days=5
-average friends=5
+average friends=11
 
 # agents as: id type or id* type if sick
 1 reserved
 2 reserved
-3* reserved
+3 reserved
 4 reserved
 5 reserved
+6* social
+7 reserved
+8 reserved
+
+#graph of friends
+1 3 7 
+2 3 6 
+3 2 4 1 8 7 
+4 7 3 8 6 
+5 7 
+6 2 4 
+7 4 5 1 3 
+8 4 3 
+
+#stats in the next days
+7 1 0
+7 1 0
+7 1 0
+7 1 0
+7 1 0

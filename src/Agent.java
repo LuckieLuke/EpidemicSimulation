@@ -4,11 +4,13 @@ public class Agent {
     private AgentType type;
     private boolean resistant;
     private boolean sick;
+    private boolean alive;
 
     public Agent(int id, AgentType type) {
         this.id = id;
         this.type = type;
         resistant = false;
+        alive = true;
     }
 
     public AgentType getType() {
@@ -36,12 +38,20 @@ public class Agent {
         return sick;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void die() {
+        alive = false;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(id);
         if(sick)
             sb.append("*");
-        sb.append(" ").append(String.format("%s", type).toLowerCase()).append('\n');
+        sb.append(" ").append(String.format("%s\n", type).toLowerCase());
         return sb.toString();
     }
 }

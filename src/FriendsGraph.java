@@ -50,6 +50,14 @@ public class FriendsGraph {
         return agents;
     }
 
+    public ArrayList<Agent>[] getGraph() {
+        return graph;
+    }
+
+    public int getNumOfAgents() {
+        return numOfAgents;
+    }
+
     public void printAgents() {
         for(int i = 0; i < numOfAgents; i++)
             System.out.println(agents[i]);
