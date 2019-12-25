@@ -58,12 +58,14 @@ public class FriendsGraph {
         int i = 0;
         int num = 0;
         while(i < numOfAgents) {
-            if(agents[i].equals(x)) {
+            if(agents[i] == x) {
                 num = i;
                 i = numOfAgents;
             }
+            i++;
         }
-        return graph[num];
+        ArrayList<Agent> copy = new ArrayList<>(graph[num]);
+        return copy;
     }
 
     public int getNumOfAgents() {

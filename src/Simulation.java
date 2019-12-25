@@ -1,6 +1,7 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Simulation {
@@ -28,7 +29,9 @@ public class Simulation {
                 recoverChance, deathChance, numOfDays, friendsAvg, fg);
 
         World world = new World(fg, numOfDays);
-
+        ArrayList<Agent> friends = world.availableFriends(fg.getAgents()[0]);
+        System.out.println("FINAL LIST:");
+        world.printArrayList(friends);
     }
 
     private static void getProps() throws IOException {

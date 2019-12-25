@@ -26,7 +26,7 @@ public class World {
         for(int i = 0; i < endDay; i++)
             days[i] = new Day(i);
 
-        startSimulation();
+        //startSimulation();
     }
 
     public void startSimulation() throws IOException {
@@ -83,11 +83,17 @@ public class World {
 
     public ArrayList<Agent> availableFriends(Agent x) {
         ArrayList<Agent> agents = graph.getFriendsOfX(x);
-        ArrayList<Agent> toDo = graph.getFriendsOfX(x);
+        ArrayList<Agent> toUse = graph.getFriendsOfX(x);
 
         if(x.getType() == AgentType.SOCIAL) {
-            for(Agent a: toDo) {
-                agents.addAll(graph.getFriendsOfX(a)); //możliwe, że doda powtórki, w szczególności samego źródło
+            for(Agent a: toUse) {
+                ArrayList<Agent> fof = graph.getFriendsOfX(a);
+
+                for(Agent b: fof) {
+                    if(!agents.contains(b) && b != x)
+                        agents.add(b);
+                }
+
             }
         }
 
@@ -98,6 +104,11 @@ public class World {
         Random rand = new Random();
         int x = rand.nextInt(agents.size());
         return agents.get(x);
+    }
+
+    public void printArrayList(ArrayList<Agent> agents) {
+        for(Agent a: agents)
+            System.out.print(a);
     }
 
 }
