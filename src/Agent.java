@@ -78,7 +78,7 @@ public class Agent {
         sb.append(id);
         if(sick)
             sb.append("*");
-        sb.append(" ").append(String.format("%s\n", type).toLowerCase());
+        sb.append(" ").append(String.format("%s %s\n", type, alive).toLowerCase());
         return sb.toString();
     }
 }

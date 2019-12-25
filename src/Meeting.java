@@ -22,4 +22,8 @@ public class Meeting {
             return agents[0];
     }
 
+    public String toString() {
+        return String.format(agents[0].toString() + " + " + agents[1].toString() + "\n");
+    }
+
 }

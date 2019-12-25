@@ -26,12 +26,16 @@ public class World {
         for(int i = 0; i < endDay; i++)
             days[i] = new Day(i);
 
-        //startSimulation();
+        startSimulation();
     }
 
     public void startSimulation() throws IOException {
         FileManager fm = new FileManager();
         while(dayNumber < endDay) {
+            if(isEverybodyDead()) {
+                System.out.println("EVERYDOBY'S DEAD");
+                System.exit(12);
+            }
             days[dayNumber].dieOrRecover(graph);
             planMeetings(dayNumber);
             days[dayNumber].meet();
@@ -43,12 +47,15 @@ public class World {
 
     public void updateHSR() {
         Agent[] agents = graph.getAgents();
-        healthy = sick = resistant = 0;
+        healthy = 0;
+        sick = 0;
+        resistant = 0;
         for(int i = 0; i < agents.length; i++) {
-            if(agents[i].isSick())
+            if(agents[i].isAlive() && agents[i].isSick())
                 sick++;
-            else
+            else if(agents[i].isAlive() && !agents[i].isSick())
                 healthy++;
+
             if(agents[i].isResistant())
                 resistant++;
         }
@@ -60,16 +67,16 @@ public class World {
         Random rand = new Random();
         double meet;
         int day;
-        Agent toMeet;
 
         for(Agent a: agents) {
             meet = rand.nextDouble();
             while(meet < a.getMeetingChance()) {
                 day = meetingDay(dayNumber);
                 friends = availableFriends(a);
-                Agent b = chooseAgentToMeet(friends);
-
-                days[day].addMeetingOnDay(a, b, day);
+                if(!friends.isEmpty()) {
+                    Agent b = chooseAgentToMeet(friends);
+                    days[day].addMeeting(a, b);
+                }
 
                 meet = rand.nextDouble();
             }
@@ -104,6 +111,15 @@ public class World {
         Random rand = new Random();
         int x = rand.nextInt(agents.size());
         return agents.get(x);
+    }
+
+    public boolean isEverybodyDead() {
+        Agent[] agents = graph.getAgents();
+        for(Agent a: agents) {
+            if(a.isAlive())
+                return false;
+        }
+        return true;
     }
 
     public void printArrayList(ArrayList<Agent> agents) {

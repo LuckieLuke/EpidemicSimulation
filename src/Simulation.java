@@ -13,7 +13,7 @@ public class Simulation {
     private static double recoverChance;
     private static double meetingChance;
     private static double diseaseChance;
-    private static final int numOfDays = 5;
+    private static int numOfDays;
 
     public static void main(String[] args) throws IOException {
         try {
@@ -29,9 +29,6 @@ public class Simulation {
                 recoverChance, deathChance, numOfDays, friendsAvg, fg);
 
         World world = new World(fg, numOfDays);
-        ArrayList<Agent> friends = world.availableFriends(fg.getAgents()[0]);
-        System.out.println("FINAL LIST:");
-        world.printArrayList(friends);
     }
 
     private static void getProps() throws IOException {
@@ -47,5 +44,6 @@ public class Simulation {
         recoverChance = Double.parseDouble(props.getProperty("recoverChance"));
         meetingChance = Double.parseDouble(props.getProperty("meetingChance"));
         diseaseChance = Double.parseDouble(props.getProperty("diseaseChance"));
+        numOfDays = Integer.parseInt(props.getProperty("numOfDays"));
     }
 }

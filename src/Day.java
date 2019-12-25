@@ -18,12 +18,14 @@ public class Day {
         for(Agent a: agents) {
             if(a.isAlive() && a.isSick()) {
                 deathProb = rand.nextDouble();
-                if(deathProb < a.getDeathChance())
+                if(deathProb <= a.getDeathChance()) {
                     a.die();
+                }
                 if(a.isAlive()) {
                     recoveryProb = rand.nextDouble();
-                    if(recoveryProb < a.getRecoverChance())
+                    if(recoveryProb <= a.getRecoverChance()) {
                         a.recover();
+                    }
                 }
             }
         }
@@ -42,8 +44,17 @@ public class Day {
         }
     }
 
-    public void addMeetingOnDay(Agent a, Agent b, int nr) {
+    public void addMeeting(Agent a, Agent b) {
+        meetings.add(new Meeting(a, b));
+    }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Day number %d:\n", number));
+        for(Meeting m: meetings) {
+            sb.append(m.toString());
+        }
+        return sb.toString();
     }
 
 }
