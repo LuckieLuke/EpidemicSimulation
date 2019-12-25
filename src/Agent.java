@@ -37,6 +37,8 @@ public class Agent {
     public void sicken() {
         sick = true;
         meetingChance /= 2;
+        if(type == AgentType.SOCIAL)
+            type = AgentType.RESERVED;
     }
 
     public void recover() {
