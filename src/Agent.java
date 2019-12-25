@@ -6,11 +6,20 @@ public class Agent {
     private boolean sick;
     private boolean alive;
 
-    public Agent(int id, AgentType type) {
+    private double deathChance;
+    private double recoverChance;
+    private double meetingChance;
+    private double diseaseChance;
+
+    public Agent(int id, AgentType type, double death, double rec, double meet, double dis) {
         this.id = id;
         this.type = type;
         resistant = false;
         alive = true;
+        deathChance = death;
+        recoverChance = rec;
+        meetingChance = meet;
+        diseaseChance = dis;
     }
 
     public AgentType getType() {
@@ -27,11 +36,13 @@ public class Agent {
 
     public void sicken() {
         sick = true;
+        meetingChance /= 2;
     }
 
     public void recover() {
         sick = false;
         resistant = true;
+        meetingChance *= 2;
     }
 
     public boolean isSick() {
@@ -40,6 +51,22 @@ public class Agent {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public double getDeathChance() {
+        return deathChance;
+    }
+
+    public double getRecoverChance() {
+        return recoverChance;
+    }
+
+    public double getDiseaseChance() {
+        return diseaseChance;
+    }
+
+    public double getMeetingChance() {
+        return meetingChance;
     }
 
     public void die() {

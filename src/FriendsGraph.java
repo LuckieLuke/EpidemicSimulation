@@ -9,7 +9,7 @@ public class FriendsGraph {
     private int numOfAgents;
     private int avgFriends;
 
-    public FriendsGraph(int numOfAgents, int avgFriends, double socialProbability) {
+    public FriendsGraph(int numOfAgents, int avgFriends, double socialProbability, double death, double rec, double meet, double dis) {
         this.numOfAgents = numOfAgents;
         this.avgFriends = avgFriends;
 
@@ -17,7 +17,7 @@ public class FriendsGraph {
         agents = new Agent[numOfAgents];
         for(int i = 0; i < numOfAgents; i++) {
             double chance = rand.nextDouble();
-            agents[i] = new Agent(i+1, chance < socialProbability ? AgentType.SOCIAL : AgentType.RESERVED);
+            agents[i] = new Agent(i+1, chance < socialProbability ? AgentType.SOCIAL : AgentType.RESERVED, death, rec, meet, dis);
         }
         int sickNum = rand.nextInt(numOfAgents);
         agents[sickNum].sicken();
@@ -52,6 +52,18 @@ public class FriendsGraph {
 
     public ArrayList<Agent>[] getGraph() {
         return graph;
+    }
+
+    public ArrayList<Agent> getFriendsOfX(Agent x) {
+        int i = 0;
+        int num = 0;
+        while(i < numOfAgents) {
+            if(agents[i].equals(x)) {
+                num = i;
+                i = numOfAgents;
+            }
+        }
+        return graph[num];
     }
 
     public int getNumOfAgents() {

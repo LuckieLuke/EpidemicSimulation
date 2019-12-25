@@ -10,20 +10,12 @@ public class World {
     private int healthy;
     private int resistant;
     private FriendsGraph graph;
-    public double deathChance;
-    public double recoverChance;
-    public double meetingChance;
-    public double diseaseChance;
     private Day[] days;
     private Random rand = new Random();
 
-    public World(FriendsGraph graph, double deathChance, double recoverChance, double meetingChance, double diseaseChance, int endDay) throws IOException{
+    public World(FriendsGraph graph, int endDay) throws IOException{
         dayNumber = 0;
         this.graph = graph;
-        this.deathChance = deathChance;
-        this.recoverChance = recoverChance;
-        this.meetingChance = meetingChance;
-        this.diseaseChance = diseaseChance;
         this.endDay = endDay;
 
         resistant = 0;
@@ -37,17 +29,19 @@ public class World {
         startSimulation();
     }
 
-    private void startSimulation() throws IOException {
+    public void startSimulation() throws IOException {
         FileManager fm = new FileManager();
         while(dayNumber < endDay) {
-
+            days[dayNumber].dieOrRecover(graph);
+            planMeetings(dayNumber);
+            days[dayNumber].meet();
             updateHSR();
             fm.writeStats(healthy, sick, resistant);
             dayNumber++;
         }
     }
 
-    private void updateHSR() {
+    public void updateHSR() {
         Agent[] agents = graph.getAgents();
         healthy = sick = resistant = 0;
         for(int i = 0; i < agents.length; i++) {
@@ -58,6 +52,52 @@ public class World {
             if(agents[i].isResistant())
                 resistant++;
         }
+    }
+
+    public void planMeetings(int dayNumber) {
+        Agent[] agents = graph.getAgents();
+        ArrayList<Agent> friends;
+        Random rand = new Random();
+        double meet;
+        int day;
+        Agent toMeet;
+
+        for(Agent a: agents) {
+            meet = rand.nextDouble();
+            while(meet < a.getMeetingChance()) {
+                day = meetingDay(dayNumber);
+                friends = availableFriends(a);
+                Agent b = chooseAgentToMeet(friends);
+
+                days[day].addMeetingOnDay(a, b, day);
+
+                meet = rand.nextDouble();
+            }
+        }
+    }
+
+    public int meetingDay(int dayNumber) {
+        Random rand = new Random();
+        return rand.nextInt(endDay - dayNumber) + dayNumber;
+    }
+
+    public ArrayList<Agent> availableFriends(Agent x) {
+        ArrayList<Agent> agents = graph.getFriendsOfX(x);
+        ArrayList<Agent> toDo = graph.getFriendsOfX(x);
+
+        if(x.getType() == AgentType.SOCIAL) {
+            for(Agent a: toDo) {
+                agents.addAll(graph.getFriendsOfX(a)); //możliwe, że doda powtórki, w szczególności samego źródło
+            }
+        }
+
+        return agents;
+    }
+
+    public Agent chooseAgentToMeet(ArrayList<Agent> agents) {
+        Random rand = new Random();
+        int x = rand.nextInt(agents.size());
+        return agents.get(x);
     }
 
 }

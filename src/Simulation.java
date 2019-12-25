@@ -22,12 +22,12 @@ public class Simulation {
         }
 
 
-        FriendsGraph fg = new FriendsGraph(numberOfAgents, friendsAvg, socialProbability);
+        FriendsGraph fg = new FriendsGraph(numberOfAgents, friendsAvg, socialProbability, deathChance, recoverChance, meetingChance, diseaseChance);
         FileManager fm = new FileManager();
         fm.writeData(numberOfAgents, socialProbability, meetingChance, diseaseChance,
                 recoverChance, deathChance, numOfDays, friendsAvg, fg);
 
-        World world = new World(fg, deathChance, recoverChance, meetingChance, diseaseChance, numOfDays);
+        World world = new World(fg, numOfDays);
 
     }
 
