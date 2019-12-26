@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +21,7 @@ public class FileManager {
         writeAgents(pw, graph);
         writeGraph(pw, graph, numOfAgents);
 
-        pw.append("\n#stats in the next days\n");
+        pw.append("\n# stats in the next days\n");
 
         pw.close();
     }
@@ -36,7 +35,7 @@ public class FileManager {
     }
 
     private void writeGraph(PrintWriter pw, FriendsGraph graph, int numOfAgents) throws IOException{
-        pw.append("\n#graph of friends\n");
+        pw.append("\n# graph of friends\n");
         ArrayList<Agent>[] friends = graph.getGraph();
         for(int i = 0; i < numOfAgents; i++) {
             pw.append(String.valueOf(i+1)).append(" ");
